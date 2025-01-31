@@ -27,7 +27,7 @@
 
 #define TEST_ASSERT(cond) \
                     do {\
-                        if (!cond) {\
+                        if (!(cond)) {\
                             printf(BG_BLACK RED "[FAILED]" RESET " %s:%d\tExpected: %d => Got: %d\n", __FILE__, __LINE__, true, false);\
                             exit(1);\
                          };\

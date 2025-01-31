@@ -48,6 +48,48 @@ bool __IS_EMPTY(List *self) {
     return (self->__size == 0);
 }
 
+void __REMOVE(List *self, size_t index) {
+    if (self->is_empty(self) || index >= self->size(self)) {
+        return;    
+    } 
+    if (index == 0) {
+       Node *tmp = NULL;
+       tmp = self->head;
+       self->head = self->head->next;
+       free(tmp->data);
+       free(tmp);
+    } else {
+        Node *tmp = NULL;
+        size_t curr_ind = 0;
+        tmp = self->head;
+        while (curr_ind < index - 1) {
+            tmp = tmp->next;
+            curr_ind++;
+        }
+        Node *next = tmp->next;
+        tmp->next = tmp->next->next;
+        free(next->data);
+        free(next);
+    }
+    self->__size--;
+}
+
+int __INDEX_OF(List *self, void *query, bool (*callback)(void *, void *)) {
+    if (self->is_empty(self)) {
+        return -1;
+    }
+    Node *tmp = self->head;
+    int curr_ind = 0;
+    while (tmp != NULL) {
+        if (callback(tmp->data, query)) {
+            return curr_ind;
+        }
+        tmp = tmp->next;
+        curr_ind++;
+    }
+    return -1;
+}
+
 void *__DESTROY(List *self) {
     Node *next = NULL;
 
@@ -70,14 +112,16 @@ List *create_list(void) {
         return NULL;
     }
 
-    p->__size   =    0;
-    p->head     =    NULL;
-    p->size     =    &__SIZE;
-    p->push     =    &__PUSH;
-    p->destroy  =    &__DESTROY;
-    p->peek     =    &__PEAK;
-    p->pop      =    &__POP;
-    p->is_empty =    &__IS_EMPTY;
+    p->__size       =    0;
+    p->head         =    NULL;
+    p->size         =    &__SIZE;
+    p->push         =    &__PUSH;
+    p->destroy      =    &__DESTROY;
+    p->peek         =    &__PEAK;
+    p->pop          =    &__POP;
+    p->is_empty     =    &__IS_EMPTY;
+    p->remove       =    &__REMOVE;
+    p->index_of     =    &__INDEX_OF;
 
     return p;
 

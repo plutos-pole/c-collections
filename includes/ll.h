@@ -23,6 +23,8 @@ typedef struct List {
     void*  (*pop)  (struct List *self);
     void*  (*destroy)(struct List *self);
     bool   (*is_empty)(struct List *self);
+    void   (*remove)(struct List *self, size_t index);
+    int    (*index_of)(struct List *self, void *query, bool (*callback)(void *data, void *query));
 } List;
 
 
@@ -34,6 +36,7 @@ void *__PEAK(List *self);
 void *__POP(List *self);
 bool  __IS_EMPTY(List *self);
 void *__DESTROY(List *self);
-
+void __REMOVE(List *self, size_t index);
+int __INDEX_OF(List *self, void *query, bool (*callback)(void *data, void *query));
 
 #endif
