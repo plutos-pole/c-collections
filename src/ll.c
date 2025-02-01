@@ -10,6 +10,17 @@ Node *_remove_head(List *list) {
     list->head = list->head->next;
     return tmp;
 }
+
+Node *_find_node(List *list, size_t index) {
+    Node *tmp = NULL;
+    size_t curr_ind = 0;
+    tmp = list->head;
+    while (curr_ind < index - 1) {
+        tmp = tmp->next;
+        curr_ind++;
+    }
+    return tmp;
+}
 /*****************************/
 
 
@@ -60,20 +71,13 @@ void __REMOVE(List *self, size_t index) {
     if (self->is_empty(self) || index >= self->size(self)) {
         return;    
     } 
+    Node *tmp = NULL;
     if (index == 0) {
-       Node *tmp = NULL;
-       tmp = self->head;
-       self->head = self->head->next;
+       tmp = _remove_head(self);
        free(tmp->data);
        free(tmp);
     } else {
-        Node *tmp = NULL;
-        size_t curr_ind = 0;
-        tmp = self->head;
-        while (curr_ind < index - 1) {
-            tmp = tmp->next;
-            curr_ind++;
-        }
+        tmp = _find_node(self, index);
         Node *next = tmp->next;
         tmp->next = tmp->next->next;
         free(next->data);
@@ -87,21 +91,14 @@ void *__EXTRACT(List *self, size_t index) {
         return NULL;
     }
     void *result = NULL;
+    Node *tmp = NULL;
 
      if (index == 0) {
-       Node *tmp = NULL;
-       tmp = self->head;
-       self->head = self->head->next;
+       tmp = _remove_head(self);
        result = tmp->data;
        free(tmp);
     } else {
-        Node *tmp = NULL;
-        size_t curr_ind = 0;
-        tmp = self->head;
-        while (curr_ind < index - 1) {
-            tmp = tmp->next;
-            curr_ind++;
-        }
+        tmp = _find_node(self, index);
         Node *next = tmp->next;
         tmp->next = tmp->next->next;
         result = next->data;
