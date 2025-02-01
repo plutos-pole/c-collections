@@ -197,6 +197,38 @@ void test_find_missing() {
     l->destroy(l);
 }
 
+void test_extract() {
+    List *l = create_list();
+
+    int *ind_0, *ind_1;
+    ind_0 = malloc(sizeof(int));
+    ind_1 = malloc(sizeof(int));
+
+    *ind_0 = 1;
+    *ind_1 = 2;
+    
+    l->push(l, ind_1);
+    l->push(l, ind_0);
+
+    int *result = l->extract(l, 1);
+    TEST_ASSERT(*result == 2);
+    free(result);
+    result = l->extract(l, 0);
+    TEST_ASSERT(*result == 1);
+    free(result);
+
+    l->destroy(l);
+}
+
+void test_extract_out_of_bounds() {
+    List *l = create_list();
+
+    int *result = l->extract(l, 0);
+    TEST_ASSERT(result == NULL);
+
+    l->destroy(l);
+}
+
 int main (void) {
 
     RUN_TEST(test_create_list); 
@@ -213,5 +245,7 @@ int main (void) {
     RUN_TEST(test_remove_out_of_bound);
     RUN_TEST(test_find_indexof);
     RUN_TEST(test_find_missing);
+    RUN_TEST(test_extract);
+    RUN_TEST(test_extract_out_of_bounds);
     return 0;
 }

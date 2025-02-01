@@ -3,6 +3,14 @@
 #include <stdio.h>
 #include "../includes/ll.h"
 
+/****** Helper function *******/
+Node *_remove_head(List *list) {
+    Node *tmp = NULL;
+    tmp = list->head;
+    list->head = list->head->next;
+    return tmp;
+}
+/*****************************/
 
 
 size_t __SIZE(List *self) {
@@ -74,6 +82,36 @@ void __REMOVE(List *self, size_t index) {
     self->__size--;
 }
 
+void *__EXTRACT(List *self, size_t index) {
+    if (self->is_empty(self) || index >= self->size(self)) {
+        return NULL;
+    }
+    void *result = NULL;
+
+     if (index == 0) {
+       Node *tmp = NULL;
+       tmp = self->head;
+       self->head = self->head->next;
+       result = tmp->data;
+       free(tmp);
+    } else {
+        Node *tmp = NULL;
+        size_t curr_ind = 0;
+        tmp = self->head;
+        while (curr_ind < index - 1) {
+            tmp = tmp->next;
+            curr_ind++;
+        }
+        Node *next = tmp->next;
+        tmp->next = tmp->next->next;
+        result = next->data;
+        free(next);
+    }
+    self->__size--;
+    return result;
+}
+
+
 int __INDEX_OF(List *self, void *query, bool (*callback)(void *, void *)) {
     if (self->is_empty(self)) {
         return -1;
@@ -122,6 +160,7 @@ List *create_list(void) {
     p->is_empty     =    &__IS_EMPTY;
     p->remove       =    &__REMOVE;
     p->index_of     =    &__INDEX_OF;
+    p->extract      =    &__EXTRACT;
 
     return p;
 
