@@ -183,7 +183,7 @@ void test_find_indexof() {
     l->destroy(l);
 }
 
-void test_find_notfound() {
+void test_find_missing() {
     List *l = create_list();
     
     int ind = l->index_of(l, "Test", &findStr);
@@ -212,6 +212,6 @@ int main (void) {
     RUN_TEST(test_remove_at_tail);
     RUN_TEST(test_remove_out_of_bound);
     RUN_TEST(test_find_indexof);
-    RUN_TEST(test_find_notfound);
+    RUN_TEST(test_find_missing);
     return 0;
 }

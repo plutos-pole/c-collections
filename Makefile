@@ -12,7 +12,9 @@ TESTS = $(wildcard $(TEST_DIR)/*.c)
 TEST_BINS = $(patsubst $(TEST_DIR)/%.c, $(BIN_DIR)/%, $(TESTS))
 
 
-tests: $(TEST_BINS)
+all: $(TEST_BINS)
+
+lib: $(OBJS)
 
 $(BIN_DIR)/%: $(TEST_DIR)/%.c $(OBJS)
 	@mkdir -p $(BIN_DIR)
@@ -21,3 +23,6 @@ $(BIN_DIR)/%: $(TEST_DIR)/%.c $(OBJS)
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf $(BIN_DIR)
