@@ -8,8 +8,9 @@ A simple and lightweight implementation of linked list in C, designed with OOP i
 ## Table of contents
 1 [Installation](#installation)  
 2 [API overview](#api-reference)  
-- [2.1 Linked List](#linked-list)  
-3 [Running tests](#tests)
+  - [2.1 Linked List](#linked-list)
+    
+3 [Running tests](#running-tests)
 ## Installation
 
 Clone the repository
