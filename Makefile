@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Wpedantic
+CFLAGS = -Wall -Wextra -pedantic
 
 SRC_DIR = src
 TEST_DIR = tests
