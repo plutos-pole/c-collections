@@ -25,6 +25,8 @@ bool __HAS_NEXT(Iterator *self) {
 }
 
 void *__NEXT(Iterator *self) {
-    
-
+    if (self->index < self->list->size(self->list)) {
+        return self->list->peek_at(self->list, self->index++);
+    }
+    return NULL;
 }
