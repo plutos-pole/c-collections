@@ -229,6 +229,31 @@ void test_extract_out_of_bounds() {
     l->destroy(l);
 }
 
+void test_peek_of() {
+    List *l = create_list();
+
+    int *ind_0, *ind_1;
+    ind_0 = malloc(sizeof(int));
+    ind_1 = malloc(sizeof(int));
+
+    *ind_0 = 1;
+    *ind_1 = 2;
+    
+    l->push(l, ind_1);
+    l->push(l, ind_0);
+
+    int *result = l->peek_at(l, 0);
+    TEST_ASSERT(*result == 1);
+    result = l->peek_at(l, 1);
+    TEST_ASSERT(*result == 2);
+    result = l->peek_at(l, 2);
+    TEST_ASSERT(result == NULL);
+
+    l->destroy(l);
+
+}
+
+
 int main (void) {
 
     RUN_TEST(test_create_list); 
@@ -247,5 +272,6 @@ int main (void) {
     RUN_TEST(test_find_missing);
     RUN_TEST(test_extract);
     RUN_TEST(test_extract_out_of_bounds);
+    RUN_TEST(test_peek_of);
     return 0;
 }

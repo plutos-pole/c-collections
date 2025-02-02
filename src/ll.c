@@ -12,9 +12,8 @@ Node *_remove_head(List *list) {
 }
 
 Node *_find_node(List *list, size_t index) {
-    Node *tmp = NULL;
+    Node *tmp = list->head;
     size_t curr_ind = 0;
-    tmp = list->head;
     while (curr_ind < index - 1) {
         tmp = tmp->next;
         curr_ind++;
@@ -44,7 +43,7 @@ bool __PUSH(List *self, void *data) {
 }
 
 
-void *__PEAK(List *self) {
+void *__PEEK(List *self) {
     if (self->is_empty(self)) {
         return NULL;
     }
@@ -109,6 +108,20 @@ void *__EXTRACT(List *self, size_t index) {
 }
 
 
+void* __PEEK_AT(List *self, size_t index) {
+    if (self->is_empty(self) || index >= self->size(self)) {
+        return NULL;
+    }
+    Node *tmp = self->head;
+    size_t i = 0;
+    while (i < index) {
+        tmp = tmp->next;
+        i++;
+    }
+    return tmp->data;
+}
+
+
 int __INDEX_OF(List *self, void *query, bool (*callback)(void *, void *)) {
     if (self->is_empty(self)) {
         return -1;
@@ -152,11 +165,12 @@ List *create_list(void) {
     p->size         =    &__SIZE;
     p->push         =    &__PUSH;
     p->destroy      =    &__DESTROY;
-    p->peek         =    &__PEAK;
+    p->peek         =    &__PEEK;
     p->pop          =    &__POP;
     p->is_empty     =    &__IS_EMPTY;
     p->remove       =    &__REMOVE;
     p->index_of     =    &__INDEX_OF;
+    p->peek_at      =    &__PEEK_AT;
     p->extract      =    &__EXTRACT;
 
     return p;

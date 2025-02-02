@@ -25,6 +25,7 @@ typedef struct List {
     bool   (*is_empty)(struct List *self);
     void   (*remove)(struct List *self, size_t index);
     void*  (*extract)(struct List *self, size_t index);
+    void*  (*peek_at)(struct List *self, size_t index);
     int    (*index_of)(struct List *self, void *query, bool (*callback)(void *data, void *query));
 } List;
 
@@ -33,12 +34,13 @@ typedef struct List {
 size_t __SIZE(List *self);
 List *create_list(void);
 bool __PUSH(List *self, void *data);
-void *__PEAK(List *self);
+void *__PEEK(List *self);
 void *__POP(List *self);
 bool  __IS_EMPTY(List *self);
 void *__DESTROY(List *self);
 void __REMOVE(List *self, size_t index);
 void *__EXTRACT(List *self, size_t index);
 int __INDEX_OF(List *self, void *query, bool (*callback)(void *data, void *query));
+void *__PEEK_AT(List *self, size_t index);
 
 #endif
